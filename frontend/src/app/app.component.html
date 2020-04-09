@@ -1,2 +1,39 @@
-<p>Welcome to the first page</p>
-<p>Next line</p>
+<mat-card>
+  <mat-card-title>CV Generator</mat-card-title>
+  <form action="" [formGroup]="CVGeneratorForm">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput type="text" formControlName="name">
+  </mat-form-field>
+    <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput type="email" formControlName="email">
+  </mat-form-field>
+    <mat-form-field>
+    <mat-label>Phone Number</mat-label>
+    <input matInput type="number" formControlName="phone-number">
+  </mat-form-field>
+    <mat-form-field>
+    <mat-label>Summary</mat-label>
+      <textarea matInput type="text" formControlName="summary"></textarea>
+  </mat-form-field>
+    <mat-form-field>
+    <mat-label>Degree</mat-label>
+    <input matInput type="text" formControlName="degree">
+  </mat-form-field>
+    <mat-form-field>
+    <mat-label>School</mat-label>
+    <input matInput type="text" formControlName="school">
+  </mat-form-field>
+
+    <mat-form-field>
+    <mat-label>Skills</mat-label>
+      <textarea matInput type="text" placeholder="Spearate by ',' " formControlName="skills">
+
+      </textarea>
+    </mat-form-field>
+
+  <button (click)="submitForm()" mat-raised-button color="primary">Submit</button>
+</form>
+
+</mat-card>

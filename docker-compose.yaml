@@ -7,10 +7,10 @@ services:
       - POSTGRES_DB=app
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=supersecretpassword
-  dj:
-    container_name: backend-skeleton
+  dj-cv-generator:
+    container_name: backend-cv-generator
     build: backend
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:80"
+    command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:80"
     environment:
       - DB_HOST=db
       - DB_NAME=app
@@ -22,18 +22,7 @@ services:
       - "80:80"
     depends_on:
       - db
-  ng:
-    container_name: frontend-skeleton
-    build: frontend
-    ports:
-      - "4200:4200"
-    volumes:
-      - ./frontend:/app
-      - node_modules:/app/node_modules
-    command: ng serve --proxy-config proxy.conf.js --live-reload true --host 0.0.0.0 --disable-host-check --poll 1
 
-    restart: always
 
 volumes:
   db:
-  node_modules:

@@ -1,3 +1,5 @@
 Django
 djangorestframework
 psycopg2
+pdfkit
+django-cors-headers
