@@ -34,8 +34,7 @@ class CVGenerator(APIView):
             'encoding': "UTF-8",
         }
         config='/usr/local/bin/wkhtmltopdf'
-        config = pdfkit.configuration(wkhtmltopdf='/usr/local/bin/wkhtmltopdf')
-        pdf = pdfkit.from_string(html, 'resume.pdf', configuration=config)
+        pdf = pdfkit.from_string(html, 'resume.pdf', options)
 
         response = Response(pdf, content_type='application/pdf')
         response['Content-Disposition'] = 'attachment'
