@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:10-alpine
+    environment:
+      - POSTGRES_DB=app
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=supersecretpassword
+  dj:
+    container_name: backend-skeleton
+    build: backend
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:80"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=app
+      - DB_USER=postgres
+      - DB_PASS=supersecretpassword
+    volumes:
+      - ./backend:/code
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+  ng:
+    container_name: frontend-skeleton
+    build: frontend
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./frontend:/app
+      - node_modules:/app/node_modules
+    command: ng serve --proxy-config proxy.conf.js --live-reload true --host 0.0.0.0 --disable-host-check --poll 1
+
+    restart: always
+
+volumes:
+  db:
+  node_modules:
