@@ -10,7 +10,6 @@ from django.template import loader
 
 class CVGenerator(APIView):
     def post(self, request):
-
         name = request.data.get("name", "")
         email = request.data.get("email", "")
         phone = request.data.get("phone", "")
@@ -23,24 +22,28 @@ class CVGenerator(APIView):
 
         profile = Profile(name=name, email=email, phone=phone, summary=summary, degree=degree, school=school,
                           university=university, previous_work=previous_work, skills=skills)
-        profile.save()
 
-        user_profile = profile
         template = loader.get_template('pdf/resume.html')
-        html = template.render({'user_profile': user_profile})
 
+        html = template.render({"profile": profile})
         options = {
             'page-size': 'Letter',
             'encoding': "UTF-8",
         }
-        config='/usr/local/bin/wkhtmltopdf'
+
+        # use these commands to download
+        # cd ~
+        # wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.3/wkhtmltox-0.12.3_linux-generic-amd64.tar.xz
+        # tar vxf wkhtmltox-0.12.3_linux-generic-amd64.tar.xz
+        # cp wkhtmltox/bin/wk* /usr/local/bin/
+
         pdf = pdfkit.from_string(html, 'resume.pdf', options)
 
         response = Response(pdf, content_type='application/pdf')
         response['Content-Disposition'] = 'attachment'
-        filename = "resume.pdf"
-        return response
+        profile.save()
 
+        return response
 
 
 # def resume(request, id):

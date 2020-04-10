@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
     };
 
     this.service.sendCV(payload).subscribe(response => {
-      this.fileSaverService.save(response.body, 'resume.pdf');
+      this.fileSaverService.save(response.body, 'cv.pdf');
 
     });
 
